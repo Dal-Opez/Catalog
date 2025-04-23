@@ -6,4 +6,9 @@ def home(request):
     return render(request, 'home.html')
 
 def contacts(request):
+    if request.method == "POST":
+        name = request.POST.get("name")
+        phone = request.POST.get("phone")
+        print(f"Здравствуйте, {name}! Мы свяжемся с вами по номеру телефона {phone}")
+        return HttpResponse(f"Здравствуйте, {name}! Мы свяжемся с вами по номеру телефона {phone}")
     return render(request, 'contacts.html')
