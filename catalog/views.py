@@ -3,7 +3,7 @@ from django.http import HttpResponse
 
 # Create your views here.
 def home(request):
-    return render(request, 'home.html')
+    return render(request, 'catalog/home.html')
 
 def contacts(request):
     if request.method == "POST":
@@ -11,4 +11,4 @@ def contacts(request):
         phone = request.POST.get("phone")
         print(f"Здравствуйте, {name}! Мы свяжемся с вами по номеру телефона {phone}")
         return HttpResponse(f"Здравствуйте, {name}! Мы свяжемся с вами по номеру телефона {phone}")
-    return render(request, 'contacts.html')
+    return render(request, 'catalog/contacts.html')
