@@ -1,0 +1,57 @@
+[
+{
+    "model": "catalog.category",
+    "pk": 1,
+    "fields": {
+        "name": "Продукты",
+        "description": "Продукты питания"
+    }
+},
+{
+    "model": "catalog.category",
+    "pk": 2,
+    "fields": {
+        "name": "Техника",
+        "description": "Домашняя техника"
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 1,
+    "fields": {
+        "name": "Хлеб",
+        "description": "Только из печи",
+        "image": "",
+        "category": 1,
+        "price": 60,
+        "created_at": "2025-04-29",
+        "updated_at": "2025-04-29"
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 2,
+    "fields": {
+        "name": "Молоко",
+        "description": "Только из под коровы",
+        "image": "",
+        "category": 1,
+        "price": 120,
+        "created_at": "2025-04-29",
+        "updated_at": "2025-04-29"
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 4,
+    "fields": {
+        "name": "Микроволновая печь",
+        "description": "Греет еду, а не посуду",
+        "image": "",
+        "category": 2,
+        "price": 10000,
+        "created_at": "2025-04-29",
+        "updated_at": "2025-04-29"
+    }
+}
+]
