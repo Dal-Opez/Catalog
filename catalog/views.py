@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from catalog.models import Product
 
@@ -16,3 +16,8 @@ def contacts(request):
         print(f"Здравствуйте, {name}! Мы свяжемся с вами по номеру телефона {phone}")
         return HttpResponse(f"Здравствуйте, {name}! Мы свяжемся с вами по номеру телефона {phone}")
     return render(request, 'catalog/contacts.html')
+
+def product_detail(requets, pk):
+    product = get_object_or_404(Product, pk=pk)
+    context = {'product': product}
+    return render(requets, 'catalog/product_detail.html', context)
