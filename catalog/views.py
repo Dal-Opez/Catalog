@@ -5,9 +5,11 @@ from catalog.models import Product
 # Create your views here.
 def home(request):
     last_products = Product.objects.order_by('created_at')[:5]
+    products = Product.objects.all()
     for product in last_products:
         print(product)
-    return render(request, 'catalog/home.html')
+    context = {'products': products}
+    return render(request, 'catalog/home.html', context)
 
 def contacts(request):
     if request.method == "POST":
