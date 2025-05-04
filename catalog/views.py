@@ -1,13 +1,15 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from catalog.models import Product
 
 # Create your views here.
 def home(request):
     last_products = Product.objects.order_by('created_at')[:5]
+    products = Product.objects.all()
     for product in last_products:
         print(product)
-    return render(request, 'catalog/home.html')
+    context = {'products': products}
+    return render(request, 'catalog/home.html', context)
 
 def contacts(request):
     if request.method == "POST":
@@ -16,3 +18,8 @@ def contacts(request):
         print(f"Здравствуйте, {name}! Мы свяжемся с вами по номеру телефона {phone}")
         return HttpResponse(f"Здравствуйте, {name}! Мы свяжемся с вами по номеру телефона {phone}")
     return render(request, 'catalog/contacts.html')
+
+def product_detail(requets, pk):
+    product = get_object_or_404(Product, pk=pk)
+    context = {'product': product}
+    return render(requets, 'catalog/product_detail.html', context)
