@@ -18,6 +18,13 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
     template_name = 'catalog/product_form.html'
     success_url = reverse_lazy('catalog:products_list')
 
+    def form_valid(self, form):
+        product = form.save()
+        user = self.request.user
+        product.owner = user
+        product.save()
+        return super().form_valid(form)
+
 class ProductUpdateView(LoginRequiredMixin, UpdateView):
     model = Product
     form_class = ProductForm
@@ -26,8 +33,16 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
 
     def get_form_class(self):
         user = self.request.user
+        if user == self.object.owner:
+            return ProductForm
+        if user.is_superuser:
+            class DynamicProductForm(ProductForm):
+                class Meta(ProductForm.Meta):
+                    exclude = ['created_at', 'updated_at', 'is_published'] if not user.is_superuser else []
+            return DynamicProductForm
         if user.has_perm('catalog.can_unpublish_product'):
             return ProductModeratorForm
+
         raise PermissionDenied
 
 
@@ -40,8 +55,9 @@ class ProductDeleteView(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy('catalog:products_list')
 
     def dispatch(self, request, *args, **kwargs):
-        # Проверяем права перед выполнением любого метода (GET/POST)
-        if not request.user.has_perm('catalog.can_delete_product'):
+        user = self.request.user
+        self.object = self.get_object()
+        if not (user.has_perm('catalog.can_delete_product') or user.is_superuser or user==self.object.owner):
             raise PermissionDenied
         return super().dispatch(request, *args, **kwargs)
 

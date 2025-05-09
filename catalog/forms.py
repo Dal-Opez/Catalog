@@ -9,7 +9,7 @@ from config.settings import SPAM
 class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
-        exclude = ['created_at', 'updated_at', 'is_published',]
+        exclude = ['created_at', 'updated_at', 'is_published']
         # fields = ['name', 'description', 'image', 'category', 'price', 'created_at', 'updated_at']
 
     def __init__(self, *args, **kwargs):
@@ -36,6 +36,11 @@ class ProductForm(forms.ModelForm):
         self.fields['price'].widget.attrs.update({
             'class': 'form-control',
             'placeholder': 'Введите стоимость товара'
+        })
+
+        self.fields['owner'].widget.attrs.update({
+            'class': 'form-control',
+            'placeholder': 'Введите владельца товара'
         })
 
     def clean_name(self):
