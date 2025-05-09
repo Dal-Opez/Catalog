@@ -72,6 +72,20 @@ argon2 = ["argon2-cffi (>=19.1.0)"]
 bcrypt = ["bcrypt"]
 
 [[package]]
+name = "django-country"
+version = "0.1.0"
+description = "Provides Django middleware that detects a country the request came from."
+optional = false
+python-versions = "*"
+files = [
+    {file = "django-country-0.1.0.tar.gz", hash = "sha256:ce6939be537e694bac799f98a426afc07a6132935c408b27a9ac68de30f9dc06"},
+]
+
+[package.extras]
+django-countries = ["django-countries (>=3.3)"]
+pygeoip = ["pygeoip (>=0.3.1)"]
+
+[[package]]
 name = "executing"
 version = "2.2.0"
 description = "Get the currently executing AST node of a frame, and other information"
@@ -521,4 +535,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "f4ff795ec364e72285470c9c750fc0757ce620e9398ae687dd5885f649367e96"
+content-hash = "041e1211486782286a58a63f3450d6467e1aecf1a1d107f7ca1f397178bb48cd"
