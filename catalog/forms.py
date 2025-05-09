@@ -1,4 +1,6 @@
 from django import forms
+
+from users.forms import StyleFromMixin
 from .models import Product
 from django.core.exceptions import ValidationError
 from config.settings import SPAM
@@ -7,7 +9,7 @@ from config.settings import SPAM
 class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
-        exclude = ['created_at', 'updated_at',]
+        exclude = ['created_at', 'updated_at', 'is_published',]
         # fields = ['name', 'description', 'image', 'category', 'price', 'created_at', 'updated_at']
 
     def __init__(self, *args, **kwargs):
@@ -56,3 +58,9 @@ class ProductForm(forms.ModelForm):
         if price < 0:
             raise ValidationError('Задана отрицательная стоимость товара!')
         return price
+
+class ProductModeratorForm(StyleFromMixin, forms.ModelForm):
+    class Meta:
+        model = Product
+        fields = ['is_published', ]
+
