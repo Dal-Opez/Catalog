@@ -6,8 +6,9 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 
 from catalog.forms import ProductForm, ProductModeratorForm
-from catalog.models import Product
+from catalog.models import Product, Category
 from django.contrib.auth.mixins import LoginRequiredMixin
+from .services import get_products_by_category, get_products_from_cache
 
 # Create your views here.
 
@@ -49,6 +50,8 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
 class ProductListView(ListView):
     model = Product
 
+    def get_queryset(self):
+        return get_products_from_cache()
 
 class ProductDeleteView(LoginRequiredMixin, DeleteView):
     model = Product
@@ -85,3 +88,9 @@ def contacts(request):
         return HttpResponse(f"Здравствуйте, {name}! Мы свяжемся с вами по номеру телефона {phone}")
     return render(request, 'catalog/contacts.html')
 
+
+class ProductsByCategoryView(ListView):
+    model = Category
+    def get_queryset(self):
+        category_id = self.kwargs.get('pk')
+        return get_products_by_category(category_id=category_id)
